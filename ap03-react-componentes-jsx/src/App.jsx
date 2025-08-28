@@ -1,5 +1,9 @@
 const App = () => {
-  return <p>Primeiro componente</p>
+  return(
+    <div style={{margin: 'auto', width: 768}}>
+
+    </div> 
+  )
 }
 
 export default App
