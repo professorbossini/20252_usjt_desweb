@@ -7,7 +7,14 @@ const App = () => {
         style={{display: 'block', marginBottom: 4}}>
         Nome:
       </label>
-      <input type="text" />
+      <input
+        id="nome" 
+        style={{paddingTop: 8, paddingTop: 8, borderStyle: 'hidden', outline: 'none', borderRadius: 8, width: '100%'}}
+        type="text" />
+      <button
+        style={{marginTop: 12, paddingTop: 8, paddingBottom: 8, backgroundColor: 'blueviolet', width: '100%', border: 'none', borderRadius: 8, color: 'white'}}>
+        Enviar
+      </button>
     </div> 
   )
 }
