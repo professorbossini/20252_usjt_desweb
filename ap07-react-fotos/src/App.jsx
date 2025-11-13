@@ -2,7 +2,12 @@ import { Button } from 'primereact/button'
 import Busca from './components/Busca'
 import React from 'react'
 import { createClient } from 'pexels'
+import ListaImagens from './components/ListaImagens'
 class App extends React.Component{
+
+  state = {
+    photos: []
+  }
 
   chavePexels = 'a91Qyfh2Ud1rdeOGKV8aTR5Aj9UmRvdma6EdyhC9EfKStoAyt7rmDuhV'
 
@@ -16,7 +21,14 @@ class App extends React.Component{
     this.pexelsClient.photos.search({
       query: termo
     })
-    .then((result) => console.log(result))
+    .then((result) => {
+      //não faça assim
+      //this.state.photos = result.photos
+      //faça assim
+      this.setState({
+        photos: result.photos
+      })
+    })
   }
   render(){
     return(
@@ -30,8 +42,15 @@ class App extends React.Component{
         <div className="col-12">
           <h1>Exibir uma lista de....</h1>
         </div>
-        <div className='col-8'>
+        <div className='col-12'>
           <Busca onBuscaRealizada={this.onBuscaRealizada}/>
+        </div>
+        <div className="col-12">
+          <div className="grid">
+            <ListaImagens 
+              imageStyle='col-12 md:col-6 lg:col-4 xl:col-3'
+              photos={this.state.photos}/>
+          </div>
         </div>
       </div>
     )
