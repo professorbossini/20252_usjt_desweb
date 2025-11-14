@@ -1,37 +1,35 @@
 import { Button } from 'primereact/button'
 import Busca from './components/Busca'
 import React from 'react'
-import { createClient } from 'pexels'
+import axios from 'axios'
 import ListaImagens from './components/ListaImagens'
-class App extends React.Component{
+class App extends React.Component {
 
   state = {
     photos: []
   }
 
-  chavePexels = 'a91Qyfh2Ud1rdeOGKV8aTR5Aj9UmRvdma6EdyhC9EfKStoAyt7rmDuhV'
-
-  pexelsClient = null
-
-  componentDidMount(){
-    this.pexelsClient = createClient(this.chavePexels)
-  }
-
   onBuscaRealizada = (termo) => {
-    this.pexelsClient.photos.search({
-      query: termo
+    const httpClient = axios.create({
+      baseURL: 'http://localhost:3000/'
     })
-    .then((result) => {
-      //não faça assim
-      //this.state.photos = result.photos
-      //faça assim
+
+    httpClient.get('/search', {
+      params: {
+        query: termo
+      }
+    })
+    .then(({ data }) => {
       this.setState({
-        photos: result.photos
+        photos: data.photos
       })
     })
+    .catch(err => {
+      console.log(err)
+    })
   }
-  render(){
-    return(
+  render() {
+    return (
       <div className='grid border-1 justify-content-center border-400 border-round'>
         <div className="col-12">
           <div className='flex mb-3'>
@@ -43,13 +41,13 @@ class App extends React.Component{
           <h1>Exibir uma lista de....</h1>
         </div>
         <div className='col-12'>
-          <Busca onBuscaRealizada={this.onBuscaRealizada}/>
+          <Busca onBuscaRealizada={this.onBuscaRealizada} />
         </div>
         <div className="col-12">
           <div className="grid">
-            <ListaImagens 
+            <ListaImagens
               imageStyle='col-12 md:col-6 lg:col-4 xl:col-3'
-              photos={this.state.photos}/>
+              photos={this.state.photos} />
           </div>
         </div>
       </div>
